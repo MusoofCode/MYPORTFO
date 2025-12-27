@@ -1,10 +1,12 @@
 import { motion } from 'framer-motion';
-import { Heart, Github, Linkedin, Twitter, Mail } from 'lucide-react';
+import { Heart, Github, Linkedin, Twitter, Mail, Instagram, MessageCircle } from 'lucide-react';
 
 const socialLinks = [
-  { icon: Github, href: '#', label: 'GitHub' },
-  { icon: Linkedin, href: '#', label: 'LinkedIn' },
-  { icon: Twitter, href: '#', label: 'Twitter' },
+  { icon: Github, href: 'https://github.com/MusoofCode', label: 'GitHub' },
+  { icon: Linkedin, href: 'https://www.linkedin.com/in/mustafa-ahmed-163015345/', label: 'LinkedIn' },
+  { icon: Twitter, href: 'https://x.com/MustaphaAhmet', label: 'Twitter' },
+  { icon: Instagram, href: 'https://www.instagram.com/hajji.mustafaa/', label: 'Instagram' },
+  { icon: MessageCircle, href: 'https://wa.me/252636708469', label: 'WhatsApp' },
   { icon: Mail, href: 'mailto:mostaphaahmet@gmail.com', label: 'Email' },
 ];
 
@@ -24,7 +26,7 @@ export const Footer = () => {
             className="text-3xl font-display font-bold gradient-text mb-6"
             whileHover={{ scale: 1.05 }}
           >
-            MA
+            MUSOOF
           </motion.a>
 
           {/* Social Links */}
