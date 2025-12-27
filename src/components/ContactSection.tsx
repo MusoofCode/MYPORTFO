@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, CheckCircle, Github, Linkedin, Twitter, Instagram, MessageCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const contactInfo = [
@@ -22,6 +22,14 @@ const contactInfo = [
     value: 'Hargeisa, Somaliland',
     href: '#',
   },
+];
+
+const socialLinks = [
+  { icon: Github, href: 'https://github.com/MusoofCode', label: 'GitHub' },
+  { icon: Linkedin, href: 'https://www.linkedin.com/in/mustafa-ahmed-163015345/', label: 'LinkedIn' },
+  { icon: Twitter, href: 'https://x.com/MustaphaAhmet', label: 'Twitter' },
+  { icon: Instagram, href: 'https://www.instagram.com/hajji.mustafaa/', label: 'Instagram' },
+  { icon: MessageCircle, href: 'https://wa.me/252636708469', label: 'WhatsApp' },
 ];
 
 export const ContactSection = () => {
@@ -109,11 +117,13 @@ export const ContactSection = () => {
               or opportunities to be part of your vision.
             </p>
 
-            <div className="space-y-6">
+            <div className="space-y-6 mb-8">
               {contactInfo.map((info, index) => (
                 <motion.a
                   key={info.label}
                   href={info.href}
+                  target={info.href.startsWith('mailto:') || info.href.startsWith('tel:') ? undefined : '_blank'}
+                  rel="noopener noreferrer"
                   initial={{ opacity: 0, x: -20 }}
                   animate={isInView ? { opacity: 1, x: 0 } : {}}
                   transition={{ delay: 0.4 + index * 0.1 }}
@@ -132,6 +142,31 @@ export const ContactSection = () => {
                 </motion.a>
               ))}
             </div>
+
+            {/* Social Links */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.7 }}
+            >
+              <h4 className="text-lg font-semibold mb-4">Follow Me</h4>
+              <div className="flex gap-3">
+                {socialLinks.map((social) => (
+                  <motion.a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-3 rounded-xl glass hover:border-primary/50 transition-all"
+                    whileHover={{ scale: 1.1, y: -3 }}
+                    whileTap={{ scale: 0.95 }}
+                    aria-label={social.label}
+                  >
+                    <social.icon className="w-5 h-5 text-muted-foreground hover:text-primary transition-colors" />
+                  </motion.a>
+                ))}
+              </div>
+            </motion.div>
           </motion.div>
 
           {/* Contact Form */}

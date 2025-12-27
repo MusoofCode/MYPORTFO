@@ -1,12 +1,21 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronDown, Download, Eye } from 'lucide-react';
+import { ChevronDown, Download, Eye, Github, Linkedin, Twitter, Instagram, MessageCircle, Mail } from 'lucide-react';
 import profileImage from '@/assets/profile.png';
 
 const titles = [
   'Software Engineer',
   'UI/UX Designer',
   'Digital Marketer',
+];
+
+const socialLinks = [
+  { icon: Github, href: 'https://github.com/MusoofCode', label: 'GitHub' },
+  { icon: Linkedin, href: 'https://www.linkedin.com/in/mustafa-ahmed-163015345/', label: 'LinkedIn' },
+  { icon: Twitter, href: 'https://x.com/MustaphaAhmet', label: 'Twitter' },
+  { icon: Instagram, href: 'https://www.instagram.com/hajji.mustafaa/', label: 'Instagram' },
+  { icon: MessageCircle, href: 'https://wa.me/252636708469', label: 'WhatsApp' },
+  { icon: Mail, href: 'mailto:mostaphaahmet@gmail.com', label: 'Email' },
 ];
 
 export const HeroSection = () => {
@@ -161,6 +170,29 @@ export const HeroSection = () => {
                 <Download className="w-5 h-5" />
                 Download CV
               </motion.a>
+            </motion.div>
+
+            {/* Social Links */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8 }}
+              className="flex gap-3 justify-center lg:justify-start mt-6"
+            >
+              {socialLinks.map((social) => (
+                <motion.a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3 rounded-xl glass hover:border-primary/50 transition-all"
+                  whileHover={{ scale: 1.1, y: -3 }}
+                  whileTap={{ scale: 0.95 }}
+                  aria-label={social.label}
+                >
+                  <social.icon className="w-5 h-5 text-muted-foreground hover:text-primary transition-colors" />
+                </motion.a>
+              ))}
             </motion.div>
           </motion.div>
 
