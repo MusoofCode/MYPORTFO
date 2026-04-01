@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { ChevronDown, Download, Eye, Github, Linkedin, Twitter, Instagram, MessageCircle, Mail } from 'lucide-react';
 import profileImage from '@/assets/profile.png';
+import { useMouseParallax } from '@/hooks/use-mouse-parallax';
 
 const titles = [
   'Software Engineer',
@@ -22,6 +23,11 @@ export const HeroSection = () => {
   const [titleIndex, setTitleIndex] = useState(0);
   const [displayText, setDisplayText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
+  const { ref: tiltRef, style: tiltStyle } = useMouseParallax({ intensity: 6 });
+  const { scrollY } = useScroll();
+  const heroY = useTransform(scrollY, [0, 600], [0, 150]);
+  const heroOpacity = useTransform(scrollY, [0, 400], [1, 0]);
+  const bgY = useTransform(scrollY, [0, 600], [0, -80]);
 
   useEffect(() => {
     const currentTitle = titles[titleIndex];
@@ -51,51 +57,30 @@ export const HeroSection = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Animated Background Orbs */}
-      <div className="absolute inset-0 overflow-hidden">
+      {/* Animated Background Orbs with parallax */}
+      <motion.div className="absolute inset-0 overflow-hidden" style={{ y: bgY }}>
         <motion.div
           className="floating-orb w-96 h-96 bg-primary/30 top-20 -left-48"
-          animate={{
-            x: [0, 50, 0],
-            y: [0, 30, 0],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
+          animate={{ x: [0, 50, 0], y: [0, 30, 0] }}
+          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
         />
         <motion.div
           className="floating-orb w-80 h-80 bg-secondary/30 bottom-20 -right-40"
-          animate={{
-            x: [0, -40, 0],
-            y: [0, -50, 0],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
+          animate={{ x: [0, -40, 0], y: [0, -50, 0] }}
+          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
         />
         <motion.div
           className="floating-orb w-64 h-64 bg-primary/20 top-1/2 left-1/3"
-          animate={{
-            x: [0, 30, -20, 0],
-            y: [0, -20, 30, 0],
-          }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
+          animate={{ x: [0, 30, -20, 0], y: [0, -20, 30, 0] }}
+          transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
         />
-      </div>
+      </motion.div>
 
       {/* Grid Pattern Overlay */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,_hsl(var(--muted))_1px,_transparent_0)] [background-size:40px_40px] opacity-30" />
 
-      {/* Content */}
-      <div className="relative z-10 section-container">
+      {/* Content with scroll parallax */}
+      <motion.div className="relative z-10 section-container" style={{ y: heroY, opacity: heroOpacity }}>
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Text Content */}
           <motion.div
@@ -196,27 +181,24 @@ export const HeroSection = () => {
             </motion.div>
           </motion.div>
 
-          {/* Profile Image */}
+          {/* Profile Image with 3D tilt */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
             className="relative hidden lg:block"
           >
-            <div className="relative w-full max-w-lg mx-auto">
+            <div ref={tiltRef} style={tiltStyle} className="relative w-full max-w-lg mx-auto">
               {/* Glow effect behind image */}
               <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-secondary/30 rounded-full blur-3xl animate-pulse-glow" />
               
               {/* Glass frame */}
-              <motion.div
-                className="relative glass-strong p-4 rounded-3xl"
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.3 }}
-              >
+              <div className="relative glass-strong p-4 rounded-3xl" style={{ transformStyle: 'preserve-3d' }}>
                 <img
                   src={profileImage}
                   alt="Mustafa Ahmed Abdillahi"
                   className="w-full h-auto rounded-2xl object-cover aspect-[3/4]"
+                  style={{ transform: 'translateZ(30px)' }}
                 />
                 
                 {/* Floating badge */}
@@ -224,16 +206,17 @@ export const HeroSection = () => {
                   className="absolute -bottom-4 -right-4 glass px-4 py-2 rounded-xl"
                   animate={{ y: [0, -10, 0] }}
                   transition={{ duration: 3, repeat: Infinity }}
+                  style={{ transform: 'translateZ(50px)' }}
                 >
                   <span className="text-sm font-semibold gradient-text">
                     🎨 Open to work
                   </span>
                 </motion.div>
-              </motion.div>
+              </div>
             </div>
           </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Scroll Indicator */}
       <motion.div
@@ -241,6 +224,7 @@ export const HeroSection = () => {
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        style={{ opacity: heroOpacity as any }}
       >
         <motion.div
           animate={{ y: [0, 10, 0] }}

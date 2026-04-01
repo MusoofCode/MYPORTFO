@@ -1,4 +1,4 @@
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import { Code2, Palette, TrendingUp } from 'lucide-react';
 
@@ -52,13 +52,20 @@ const SkillBar = ({ name, level, delay, color }: { name: string; level: number; 
     <div ref={ref} className="mb-4">
       <div className="flex justify-between mb-2">
         <span className="text-sm font-medium text-foreground">{name}</span>
-        <span className="text-sm text-muted-foreground">{level}%</span>
+        <motion.span
+          className="text-sm text-muted-foreground"
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.5, delay: delay + 0.5 }}
+        >
+          {level}%
+        </motion.span>
       </div>
       <div className="h-2 rounded-full bg-muted/50 overflow-hidden">
         <motion.div
-          initial={{ width: 0 }}
-          animate={isInView ? { width: `${level}%` } : {}}
-          transition={{ duration: 1, delay, ease: 'easeOut' }}
+          initial={{ width: 0, opacity: 0 }}
+          animate={isInView ? { width: `${level}%`, opacity: 1 } : {}}
+          transition={{ duration: 1.2, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
           className={`h-full rounded-full ${color === 'secondary' ? 'bg-secondary' : 'bg-primary'}`}
           style={{
             boxShadow: `0 0 20px ${color === 'secondary' ? 'hsl(var(--secondary) / 0.5)' : 'hsl(var(--primary) / 0.5)'}`,
@@ -72,11 +79,13 @@ const SkillBar = ({ name, level, delay, color }: { name: string; level: number; 
 export const SkillsSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
+  const bgY = useTransform(scrollYProgress, [0, 1], [40, -40]);
 
   return (
     <section id="skills" className="relative py-20 md:py-32 overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute inset-0">
+      {/* Background Elements with parallax */}
+      <motion.div className="absolute inset-0" style={{ y: bgY }}>
         <motion.div
           className="floating-orb w-96 h-96 bg-secondary/20 -bottom-48 -left-48"
           animate={{ x: [0, 40, 0], y: [0, -30, 0] }}
@@ -87,7 +96,7 @@ export const SkillsSection = () => {
           animate={{ x: [0, -20, 0], y: [0, 40, 0] }}
           transition={{ duration: 8, repeat: Infinity }}
         />
-      </div>
+      </motion.div>
 
       <div ref={ref} className="section-container relative z-10">
         {/* Section Header */}
@@ -113,15 +122,20 @@ export const SkillsSection = () => {
           {skillCategories.map((category, categoryIndex) => (
             <motion.div
               key={category.title}
-              initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: categoryIndex * 0.2 }}
+              initial={{ opacity: 0, y: 60, rotateX: 10 }}
+              animate={isInView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
+              transition={{ duration: 0.7, delay: categoryIndex * 0.2, type: 'spring', stiffness: 80 }}
+              whileHover={{ scale: 1.03, y: -8, transition: { duration: 0.25 } }}
               className="card-glass group"
+              style={{ willChange: 'transform' }}
             >
               <div className="flex items-center gap-4 mb-6">
-                <div className={`p-3 rounded-xl ${category.color === 'secondary' ? 'bg-secondary/20' : 'bg-primary/20'} group-hover:scale-110 transition-transform`}>
+                <motion.div
+                  className={`p-3 rounded-xl ${category.color === 'secondary' ? 'bg-secondary/20' : 'bg-primary/20'} group-hover:scale-110 transition-transform`}
+                  whileHover={{ rotate: 10 }}
+                >
                   <category.icon className={`w-6 h-6 ${category.color === 'secondary' ? 'text-secondary' : 'text-primary'}`} />
-                </div>
+                </motion.div>
                 <h3 className="text-xl font-display font-bold">{category.title}</h3>
               </div>
 

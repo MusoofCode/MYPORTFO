@@ -1,8 +1,8 @@
-import { motion } from 'framer-motion';
-import { useInView } from 'framer-motion';
+import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import { Briefcase, FolderOpen, Sparkles } from 'lucide-react';
 import profileImage from '@/assets/profile.png';
+import { useMouseParallax } from '@/hooks/use-mouse-parallax';
 
 const stats = [
   { icon: FolderOpen, value: '4+', label: 'Projects' },
@@ -13,6 +13,10 @@ const stats = [
 export const AboutSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const { ref: imageRef, style: imageStyle } = useMouseParallax({ intensity: 5 });
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
+  const imageY = useTransform(scrollYProgress, [0, 1], [60, -60]);
+  const textY = useTransform(scrollYProgress, [0, 1], [30, -30]);
 
   return (
     <section id="about" className="relative py-20 md:py-32 overflow-hidden">
@@ -27,36 +31,42 @@ export const AboutSection = () => {
 
       <div ref={ref} className="section-container relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Image Side - Mobile visible */}
+          {/* Image Side with layered parallax */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8 }}
             className="relative lg:block"
+            style={{ y: imageY }}
           >
-            <div className="relative max-w-md mx-auto">
-              {/* Decorative elements */}
-              <div className="absolute -top-4 -left-4 w-24 h-24 border-2 border-primary/30 rounded-2xl" />
-              <div className="absolute -bottom-4 -right-4 w-24 h-24 border-2 border-secondary/30 rounded-2xl" />
-              
+            <div ref={imageRef} style={imageStyle} className="relative max-w-md mx-auto">
+              {/* Decorative elements with depth */}
               <motion.div
-                className="glass-strong p-3 rounded-3xl"
-                whileHover={{ scale: 1.02 }}
-              >
+                className="absolute -top-4 -left-4 w-24 h-24 border-2 border-primary/30 rounded-2xl"
+                style={{ transform: 'translateZ(-20px)' }}
+              />
+              <motion.div
+                className="absolute -bottom-4 -right-4 w-24 h-24 border-2 border-secondary/30 rounded-2xl"
+                style={{ transform: 'translateZ(-20px)' }}
+              />
+              
+              <div className="glass-strong p-3 rounded-3xl" style={{ transformStyle: 'preserve-3d' }}>
                 <img
                   src={profileImage}
                   alt="Mustafa Ahmed Abdillahi"
                   className="w-full h-auto rounded-2xl object-cover"
+                  style={{ transform: 'translateZ(20px)' }}
                 />
-              </motion.div>
+              </div>
             </div>
           </motion.div>
 
-          {/* Content Side */}
+          {/* Content Side with parallax offset */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
+            style={{ y: textY }}
           >
             <span className="inline-block px-4 py-2 rounded-full glass text-sm font-medium text-primary mb-6">
               About Me
@@ -83,9 +93,10 @@ export const AboutSection = () => {
               {stats.map((stat, index) => (
                 <motion.div
                   key={stat.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ delay: 0.4 + index * 0.1 }}
+                  initial={{ opacity: 0, y: 30, rotateX: 15 }}
+                  animate={isInView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
+                  transition={{ delay: 0.4 + index * 0.15, type: 'spring', stiffness: 100 }}
+                  whileHover={{ scale: 1.05, y: -5 }}
                   className="card-glass text-center group"
                 >
                   <stat.icon className="w-8 h-8 text-primary mx-auto mb-3 group-hover:scale-110 transition-transform" />

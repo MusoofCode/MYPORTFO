@@ -1,6 +1,7 @@
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
-import { Palette, Users, TrendingUp, Clock } from 'lucide-react';
+import { Palette, Users, Clock } from 'lucide-react';
+import { Tilt3DCard } from './Tilt3DCard';
 
 const experiences = [
   {
@@ -40,11 +41,13 @@ const experiences = [
 export const ExperienceSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
+  const bgY = useTransform(scrollYProgress, [0, 1], [30, -30]);
 
   return (
     <section id="experience" className="relative py-20 md:py-32 overflow-hidden">
       {/* Background Elements */}
-      <div className="absolute inset-0">
+      <motion.div className="absolute inset-0" style={{ y: bgY }}>
         <motion.div
           className="floating-orb w-96 h-96 bg-secondary/15 -bottom-48 right-0"
           animate={{ x: [0, -40, 0], y: [0, 30, 0] }}
@@ -55,7 +58,7 @@ export const ExperienceSection = () => {
           animate={{ x: [0, 30, 0], y: [0, -20, 0] }}
           transition={{ duration: 9, repeat: Infinity }}
         />
-      </div>
+      </motion.div>
 
       <div ref={ref} className="section-container relative z-10">
         {/* Section Header */}
@@ -81,19 +84,19 @@ export const ExperienceSection = () => {
           {experiences.map((exp, index) => (
             <motion.div
               key={exp.title}
-              initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-              animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
+              initial={{ opacity: 0, x: index % 2 === 0 ? -60 : 60, rotateY: index % 2 === 0 ? -5 : 5 }}
+              animate={isInView ? { opacity: 1, x: 0, rotateY: 0 } : {}}
+              transition={{ duration: 0.7, delay: index * 0.2, type: 'spring', stiffness: 80 }}
             >
-              <motion.div
-                whileHover={{ scale: 1.02, y: -8 }}
-                className="card-glass h-full group"
-              >
+              <Tilt3DCard className="card-glass h-full group" intensity={5}>
                 {/* Header */}
                 <div className="flex items-start gap-4 mb-6">
-                  <div className="p-4 rounded-2xl bg-primary/20 group-hover:bg-primary/30 transition-colors">
+                  <motion.div
+                    className="p-4 rounded-2xl bg-primary/20 group-hover:bg-primary/30 transition-colors"
+                    whileHover={{ rotate: 10, scale: 1.1 }}
+                  >
                     <exp.icon className="w-8 h-8 text-primary" />
-                  </div>
+                  </motion.div>
                   <div className="flex-1">
                     <h3 className="text-xl font-display font-bold mb-1">{exp.title}</h3>
                     <p className="text-primary font-medium">{exp.company}</p>
@@ -131,7 +134,7 @@ export const ExperienceSection = () => {
                     </div>
                   ))}
                 </div>
-              </motion.div>
+              </Tilt3DCard>
             </motion.div>
           ))}
         </div>
