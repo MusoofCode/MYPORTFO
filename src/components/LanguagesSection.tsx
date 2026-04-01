@@ -1,6 +1,7 @@
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import { Globe, MessageCircle } from 'lucide-react';
+import { Tilt3DCard } from './Tilt3DCard';
 
 const languages = [
   {
@@ -26,17 +27,19 @@ const languages = [
 export const LanguagesSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
+  const bgY = useTransform(scrollYProgress, [0, 1], [20, -20]);
 
   return (
     <section className="relative py-20 md:py-32 overflow-hidden">
       {/* Background Elements */}
-      <div className="absolute inset-0">
+      <motion.div className="absolute inset-0" style={{ y: bgY }}>
         <motion.div
           className="floating-orb w-64 h-64 bg-primary/10 top-1/4 right-1/4"
           animate={{ x: [0, 20, 0], y: [0, -30, 0] }}
           transition={{ duration: 8, repeat: Infinity }}
         />
-      </div>
+      </motion.div>
 
       <div ref={ref} className="section-container relative z-10">
         {/* Section Header */}
@@ -63,14 +66,11 @@ export const LanguagesSection = () => {
           {languages.map((lang, index) => (
             <motion.div
               key={lang.name}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ duration: 0.5, delay: index * 0.15 }}
+              initial={{ opacity: 0, scale: 0.8, rotateY: -15 }}
+              animate={isInView ? { opacity: 1, scale: 1, rotateY: 0 } : {}}
+              transition={{ duration: 0.6, delay: index * 0.15, type: 'spring', stiffness: 100 }}
             >
-              <motion.div
-                whileHover={{ scale: 1.05, y: -5 }}
-                className="card-glass min-w-[180px] text-center group"
-              >
+              <Tilt3DCard className="card-glass min-w-[180px] text-center group" intensity={8}>
                 {/* Flag */}
                 <motion.div
                   className="text-5xl mb-4"
@@ -93,11 +93,11 @@ export const LanguagesSection = () => {
                   <motion.div
                     initial={{ width: 0 }}
                     animate={isInView ? { width: `${lang.proficiency}%` } : {}}
-                    transition={{ duration: 1, delay: 0.5 + index * 0.2 }}
+                    transition={{ duration: 1.2, delay: 0.5 + index * 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
                     className="h-full rounded-full bg-primary glow-primary"
                   />
                 </div>
-              </motion.div>
+              </Tilt3DCard>
             </motion.div>
           ))}
         </div>

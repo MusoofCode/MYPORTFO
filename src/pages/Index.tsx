@@ -8,10 +8,12 @@ import { ProjectsSection } from '@/components/ProjectsSection';
 import { LanguagesSection } from '@/components/LanguagesSection';
 import { ContactSection } from '@/components/ContactSection';
 import { Footer } from '@/components/Footer';
+import { ScrollProgress } from '@/components/ScrollProgress';
 
 const Index = () => {
   return (
     <main className="min-h-screen bg-background overflow-x-hidden">
+      <ScrollProgress />
       <Navbar />
       <HeroSection />
       <AboutSection />

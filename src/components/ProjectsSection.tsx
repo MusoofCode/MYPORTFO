@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
-import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { motion, useInView, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Github, X, Eye } from 'lucide-react';
+import { Tilt3DCard } from './Tilt3DCard';
 
 const projects = [
   {
@@ -49,11 +50,13 @@ export const ProjectsSection = () => {
   const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
+  const bgY = useTransform(scrollYProgress, [0, 1], [50, -50]);
 
   return (
     <section id="projects" className="relative py-20 md:py-32 overflow-hidden">
       {/* Background Elements */}
-      <div className="absolute inset-0">
+      <motion.div className="absolute inset-0" style={{ y: bgY }}>
         <motion.div
           className="floating-orb w-80 h-80 bg-primary/15 top-20 -left-40"
           animate={{ x: [0, 50, 0], y: [0, -30, 0] }}
@@ -64,7 +67,7 @@ export const ProjectsSection = () => {
           animate={{ x: [0, -40, 0], y: [0, 40, 0] }}
           transition={{ duration: 13, repeat: Infinity }}
         />
-      </div>
+      </motion.div>
 
       <div ref={ref} className="section-container relative z-10">
         {/* Section Header */}
@@ -90,13 +93,13 @@ export const ProjectsSection = () => {
           {projects.map((project, index) => (
             <motion.div
               key={project.id}
-              initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: index * 0.15 }}
+              initial={{ opacity: 0, y: 60, rotateY: index % 2 === 0 ? -5 : 5 }}
+              animate={isInView ? { opacity: 1, y: 0, rotateY: 0 } : {}}
+              transition={{ duration: 0.7, delay: index * 0.15, type: 'spring', stiffness: 80 }}
             >
-              <motion.div
-                whileHover={{ scale: 1.02, y: -8 }}
+              <Tilt3DCard
                 className="card-glass overflow-hidden group cursor-pointer"
+                intensity={6}
                 onClick={() => setSelectedProject(project)}
               >
                 {/* Image */}
@@ -110,13 +113,9 @@ export const ProjectsSection = () => {
                   
                   {/* Overlay on hover */}
                   <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      whileHover={{ scale: 1 }}
-                      className="p-4 rounded-full bg-primary/90"
-                    >
+                    <div className="p-4 rounded-full bg-primary/90 scale-0 group-hover:scale-100 transition-transform duration-300">
                       <Eye className="w-6 h-6 text-primary-foreground" />
-                    </motion.div>
+                    </div>
                   </div>
 
                   {/* Category Badge */}
@@ -144,7 +143,7 @@ export const ProjectsSection = () => {
                     </span>
                   ))}
                 </div>
-              </motion.div>
+              </Tilt3DCard>
             </motion.div>
           ))}
         </div>
@@ -161,16 +160,17 @@ export const ProjectsSection = () => {
             onClick={() => setSelectedProject(null)}
           >
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
+              initial={{ scale: 0.85, opacity: 0, rotateX: 10 }}
+              animate={{ scale: 1, opacity: 1, rotateX: 0 }}
+              exit={{ scale: 0.85, opacity: 0, rotateX: -10 }}
+              transition={{ type: 'spring', stiffness: 200, damping: 20 }}
               className="glass-strong max-w-2xl w-full max-h-[90vh] overflow-auto"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close Button */}
               <button
                 onClick={() => setSelectedProject(null)}
-                className="absolute top-4 right-4 p-2 rounded-xl glass hover:bg-muted transition-colors"
+                className="absolute top-4 right-4 p-2 rounded-xl glass hover:bg-muted transition-colors z-10"
               >
                 <X className="w-5 h-5" />
               </button>

@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import { Mail, Phone, MapPin, Send, CheckCircle, Github, Linkedin, Twitter, Instagram, MessageCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
@@ -45,12 +45,13 @@ export const ContactSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const { toast } = useToast();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
+  const bgY = useTransform(scrollYProgress, [0, 1], [30, -30]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
     await new Promise(resolve => setTimeout(resolve, 1500));
     
     setIsSubmitting(false);
@@ -69,7 +70,7 @@ export const ContactSection = () => {
   return (
     <section id="contact" className="relative py-20 md:py-32 overflow-hidden">
       {/* Background Elements */}
-      <div className="absolute inset-0">
+      <motion.div className="absolute inset-0" style={{ y: bgY }}>
         <motion.div
           className="floating-orb w-96 h-96 bg-primary/15 -bottom-48 -left-48"
           animate={{ x: [0, 50, 0], y: [0, -30, 0] }}
@@ -80,7 +81,7 @@ export const ContactSection = () => {
           animate={{ x: [0, -40, 0], y: [0, 40, 0] }}
           transition={{ duration: 10, repeat: Infinity }}
         />
-      </div>
+      </motion.div>
 
       <div ref={ref} className="section-container relative z-10">
         {/* Section Header */}
@@ -104,9 +105,9 @@ export const ContactSection = () => {
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Contact Info */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: -60 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.7, delay: 0.2, type: 'spring', stiffness: 80 }}
           >
             <h3 className="text-2xl font-display font-bold mb-6">
               Contact Information
@@ -124,15 +125,18 @@ export const ContactSection = () => {
                   href={info.href}
                   target={info.href.startsWith('mailto:') || info.href.startsWith('tel:') ? undefined : '_blank'}
                   rel="noopener noreferrer"
-                  initial={{ opacity: 0, x: -20 }}
+                  initial={{ opacity: 0, x: -30 }}
                   animate={isInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ delay: 0.4 + index * 0.1 }}
+                  transition={{ delay: 0.4 + index * 0.15, type: 'spring', stiffness: 100 }}
                   className="flex items-center gap-4 group"
-                  whileHover={{ x: 5 }}
+                  whileHover={{ x: 8 }}
                 >
-                  <div className="p-4 rounded-2xl bg-primary/20 group-hover:bg-primary/30 transition-colors">
+                  <motion.div
+                    className="p-4 rounded-2xl bg-primary/20 group-hover:bg-primary/30 transition-colors"
+                    whileHover={{ rotate: 10, scale: 1.1 }}
+                  >
                     <info.icon className="w-6 h-6 text-primary" />
-                  </div>
+                  </motion.div>
                   <div>
                     <p className="text-sm text-muted-foreground">{info.label}</p>
                     <p className="font-medium group-hover:text-primary transition-colors">
@@ -171,13 +175,12 @@ export const ContactSection = () => {
 
           {/* Contact Form */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            initial={{ opacity: 0, x: 60, rotateY: 5 }}
+            animate={isInView ? { opacity: 1, x: 0, rotateY: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.3, type: 'spring', stiffness: 80 }}
           >
             <form onSubmit={handleSubmit} className="card-glass">
               <div className="grid sm:grid-cols-2 gap-4 mb-4">
-                {/* Name Field */}
                 <div className="relative">
                   <input
                     type="text"
@@ -196,7 +199,6 @@ export const ContactSection = () => {
                   </label>
                 </div>
 
-                {/* Email Field */}
                 <div className="relative">
                   <input
                     type="email"
@@ -216,7 +218,6 @@ export const ContactSection = () => {
                 </div>
               </div>
 
-              {/* Subject Field */}
               <div className="relative mb-4">
                 <input
                   type="text"
@@ -235,7 +236,6 @@ export const ContactSection = () => {
                 </label>
               </div>
 
-              {/* Message Field */}
               <div className="relative mb-6">
                 <textarea
                   id="message"
@@ -254,7 +254,6 @@ export const ContactSection = () => {
                 </label>
               </div>
 
-              {/* Submit Button */}
               <motion.button
                 type="submit"
                 disabled={isSubmitting || isSubmitted}
