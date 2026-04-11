@@ -147,7 +147,8 @@ export const HeroSection = () => {
               </motion.button>
               
               <motion.a
-                href="#contact"
+                href="/Mustafa_CV.pdf"
+                download="Mustafa_Ahmed_CV.pdf"
                 className="btn-glass flex items-center justify-center gap-2"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
