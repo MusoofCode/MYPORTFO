@@ -44,7 +44,7 @@ const projects: Project[] = [
     image: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=800&q=80',
     tags: ['Illustrator', 'Photoshop', 'Branding'],
     type: 'gallery',
-    galleryImages: [brandIdentity1, brandIdentity2],
+    galleryImages: [brandIdentity1, brandIdentity2, brandIdentity3, brandIdentity4],
   },
   {
     id: 3,
@@ -54,7 +54,7 @@ const projects: Project[] = [
     image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&q=80',
     tags: ['Strategy', 'Content', 'Analytics'],
     type: 'gallery',
-    galleryImages: [socialMedia1, socialMedia2],
+    galleryImages: [socialMedia1, socialMedia2, socialMedia3, socialMedia4],
   },
   {
     id: 4,
