@@ -1,15 +1,66 @@
 import { useState, useRef } from 'react';
 import { motion, useInView, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Github, X, Eye, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Github, X, Eye, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Tilt3DCard } from './Tilt3DCard';
+
+// Brand Identity images
 import brandIdentity1 from '@/assets/brand-identity-1.jpg';
 import brandIdentity2 from '@/assets/brand-identity-2.jpg';
 import brandIdentity3 from '@/assets/brand-identity-3.jpg';
 import brandIdentity4 from '@/assets/brand-identity-4.jpg';
+import brandIdentity5 from '@/assets/brand-identity-5.jpg';
+import brandIdentity6 from '@/assets/brand-identity-6.jpg';
+import brandIdentity7 from '@/assets/brand-identity-7.jpg';
+import brandIdentity8 from '@/assets/brand-identity-8.jpg';
+import brandIdentity9 from '@/assets/brand-identity-9.jpg';
+import brandIdentity10 from '@/assets/brand-identity-10.jpg';
+import brandIdentity11 from '@/assets/brand-identity-11.jpg';
+import brandIdentity12 from '@/assets/brand-identity-12.jpg';
+import brandIdentity13 from '@/assets/brand-identity-13.jpg';
+import brandIdentity14 from '@/assets/brand-identity-14.jpg';
+import brandIdentity15 from '@/assets/brand-identity-15.jpg';
+import brandIdentity16 from '@/assets/brand-identity-16.jpg';
+import brandIdentity17 from '@/assets/brand-identity-17.jpg';
+import brandIdentity18 from '@/assets/brand-identity-18.jpg';
+import brandIdentity19 from '@/assets/brand-identity-19.jpg';
+import brandIdentity20 from '@/assets/brand-identity-20.jpg';
+import brandIdentity21 from '@/assets/brand-identity-21.jpg';
+import brandIdentity22 from '@/assets/brand-identity-22.jpg';
+import brandIdentity23 from '@/assets/brand-identity-23.jpg';
+import brandIdentity24 from '@/assets/brand-identity-24.jpg';
+import brandIdentity25 from '@/assets/brand-identity-25.jpg';
+import brandIdentity26 from '@/assets/brand-identity-26.jpg';
+import brandIdentity27 from '@/assets/brand-identity-27.jpg';
+import brandIdentity28 from '@/assets/brand-identity-28.jpg';
+
+// Social Media images
 import socialMedia1 from '@/assets/social-media-1.jpg';
 import socialMedia2 from '@/assets/social-media-2.jpg';
 import socialMedia3 from '@/assets/social-media-3.jpg';
 import socialMedia4 from '@/assets/social-media-4.jpg';
+import socialMedia5 from '@/assets/social-media-5.jpg';
+import socialMedia6 from '@/assets/social-media-6.jpg';
+import socialMedia7 from '@/assets/social-media-7.jpg';
+import socialMedia8 from '@/assets/social-media-8.jpg';
+import socialMedia9 from '@/assets/social-media-9.jpg';
+import socialMedia10 from '@/assets/social-media-10.jpg';
+import socialMedia11 from '@/assets/social-media-11.jpg';
+import socialMedia12 from '@/assets/social-media-12.jpg';
+import socialMedia13 from '@/assets/social-media-13.jpg';
+import socialMedia14 from '@/assets/social-media-14.jpg';
+import socialMedia15 from '@/assets/social-media-15.jpg';
+import socialMedia16 from '@/assets/social-media-16.jpg';
+import socialMedia17 from '@/assets/social-media-17.jpg';
+import socialMedia18 from '@/assets/social-media-18.jpg';
+import socialMedia19 from '@/assets/social-media-19.jpg';
+import socialMedia20 from '@/assets/social-media-20.jpg';
+import socialMedia21 from '@/assets/social-media-21.jpg';
+import socialMedia22 from '@/assets/social-media-22.jpg';
+import socialMedia23 from '@/assets/social-media-23.jpg';
+import socialMedia24 from '@/assets/social-media-24.jpg';
+import socialMedia25 from '@/assets/social-media-25.jpg';
+import socialMedia26 from '@/assets/social-media-26.jpg';
+import socialMedia27 from '@/assets/social-media-27.jpg';
 
 type ProjectType = 'github' | 'gallery';
 
@@ -24,6 +75,26 @@ interface Project {
   githubUrl?: string;
   galleryImages?: string[];
 }
+
+const brandIdentityImages = [
+  brandIdentity1, brandIdentity2, brandIdentity3, brandIdentity4,
+  brandIdentity5, brandIdentity6, brandIdentity7, brandIdentity8,
+  brandIdentity9, brandIdentity10, brandIdentity11, brandIdentity12,
+  brandIdentity13, brandIdentity14, brandIdentity15, brandIdentity16,
+  brandIdentity17, brandIdentity18, brandIdentity19, brandIdentity20,
+  brandIdentity21, brandIdentity22, brandIdentity23, brandIdentity24,
+  brandIdentity25, brandIdentity26, brandIdentity27, brandIdentity28,
+];
+
+const socialMediaImages = [
+  socialMedia1, socialMedia2, socialMedia3, socialMedia4,
+  socialMedia5, socialMedia6, socialMedia7, socialMedia8,
+  socialMedia9, socialMedia10, socialMedia11, socialMedia12,
+  socialMedia13, socialMedia14, socialMedia15, socialMedia16,
+  socialMedia17, socialMedia18, socialMedia19, socialMedia20,
+  socialMedia21, socialMedia22, socialMedia23, socialMedia24,
+  socialMedia25, socialMedia26, socialMedia27,
+];
 
 const projects: Project[] = [
   {
@@ -40,21 +111,21 @@ const projects: Project[] = [
     id: 2,
     title: 'Brand Identity System',
     category: 'Graphic Design',
-    description: 'Complete brand identity package including logo design, color palette, typography, and brand guidelines for a tech startup.',
+    description: 'Complete brand identity packages including logo design, color palette, typography, packaging, stationery, and brand guidelines across multiple industries.',
     image: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=800&q=80',
     tags: ['Illustrator', 'Photoshop', 'Branding'],
     type: 'gallery',
-    galleryImages: [brandIdentity1, brandIdentity2, brandIdentity3, brandIdentity4],
+    galleryImages: brandIdentityImages,
   },
   {
     id: 3,
     title: 'Social Media Campaign',
     category: 'Digital Marketing',
-    description: 'Comprehensive social media strategy and content creation that increased engagement by 200% and follower growth by 150%.',
+    description: 'Comprehensive social media strategies and content creation across multiple industries — fitness, travel, food, tech, fashion, and more.',
     image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&q=80',
     tags: ['Strategy', 'Content', 'Analytics'],
     type: 'gallery',
-    galleryImages: [socialMedia1, socialMedia2, socialMedia3, socialMedia4],
+    galleryImages: socialMediaImages,
   },
   {
     id: 4,
@@ -220,14 +291,9 @@ export const ProjectsSection = () => {
                       >
                         <ChevronRight className="w-5 h-5" />
                       </button>
-                      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2">
-                        {selectedProject.galleryImages.map((_, i) => (
-                          <button
-                            key={i}
-                            onClick={() => setGalleryIndex(i)}
-                            className={`w-2 h-2 rounded-full transition-colors ${i === galleryIndex ? 'bg-primary' : 'bg-muted-foreground/50'}`}
-                          />
-                        ))}
+                      {/* Counter */}
+                      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full glass text-xs font-medium">
+                        {galleryIndex + 1} / {selectedProject.galleryImages.length}
                       </div>
                     </>
                   )}
@@ -264,7 +330,6 @@ export const ProjectsSection = () => {
                   ))}
                 </div>
 
-                {/* Action Buttons based on type */}
                 <div className="flex gap-4">
                   {selectedProject.type === 'github' && selectedProject.githubUrl && (
                     <motion.a
@@ -281,7 +346,7 @@ export const ProjectsSection = () => {
                   )}
                   {selectedProject.type === 'gallery' && (
                     <div className="text-sm text-muted-foreground text-center w-full py-2">
-                      Browse the gallery above to see the designs ✨
+                      Use the arrows to browse all {selectedProject.galleryImages?.length} designs ✨
                     </div>
                   )}
                 </div>
