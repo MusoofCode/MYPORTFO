@@ -4,8 +4,12 @@ import { ExternalLink, Github, X, Eye, ChevronLeft, ChevronRight } from 'lucide-
 import { Tilt3DCard } from './Tilt3DCard';
 import brandIdentity1 from '@/assets/brand-identity-1.jpg';
 import brandIdentity2 from '@/assets/brand-identity-2.jpg';
+import brandIdentity3 from '@/assets/brand-identity-3.jpg';
+import brandIdentity4 from '@/assets/brand-identity-4.jpg';
 import socialMedia1 from '@/assets/social-media-1.jpg';
 import socialMedia2 from '@/assets/social-media-2.jpg';
+import socialMedia3 from '@/assets/social-media-3.jpg';
+import socialMedia4 from '@/assets/social-media-4.jpg';
 
 type ProjectType = 'github' | 'gallery';
 
