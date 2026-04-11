@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Navbar } from '@/components/Navbar';
 import { HeroSection } from '@/components/HeroSection';
 import { AboutSection } from '@/components/AboutSection';
@@ -9,10 +10,19 @@ import { LanguagesSection } from '@/components/LanguagesSection';
 import { ContactSection } from '@/components/ContactSection';
 import { Footer } from '@/components/Footer';
 import { ScrollProgress } from '@/components/ScrollProgress';
+import { SplashScreen } from '@/components/SplashScreen';
 
 const Index = () => {
+  const [showSplash, setShowSplash] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowSplash(false), 2500);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <main className="min-h-screen bg-background overflow-x-hidden">
+      <SplashScreen isVisible={showSplash} />
       <ScrollProgress />
       <Navbar />
       <HeroSection />
