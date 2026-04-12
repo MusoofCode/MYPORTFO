@@ -19,7 +19,7 @@ import brandIdentity12 from '@/assets/brand-identity-12.jpg';
 import brandIdentity13 from '@/assets/brand-identity-13.jpg';
 import brandIdentity14 from '@/assets/brand-identity-14.jpg';
 import brandIdentity15 from '@/assets/brand-identity-15.jpg';
-import brandIdentity16 from '@/assets/brand-identity-16.jpg';
+
 import brandIdentity17 from '@/assets/brand-identity-17.jpg';
 import brandIdentity18 from '@/assets/brand-identity-18.jpg';
 import brandIdentity19 from '@/assets/brand-identity-19.jpg';
@@ -80,7 +80,7 @@ const brandIdentityImages = [
   brandIdentity1, brandIdentity2, brandIdentity3, brandIdentity4,
   brandIdentity5, brandIdentity6, brandIdentity7, brandIdentity8,
   brandIdentity9, brandIdentity10, brandIdentity11, brandIdentity12,
-  brandIdentity13, brandIdentity14, brandIdentity15, brandIdentity16,
+  brandIdentity13, brandIdentity14, brandIdentity15,
   brandIdentity17, brandIdentity18, brandIdentity19, brandIdentity20,
   brandIdentity21, brandIdentity22, brandIdentity23, brandIdentity24,
   brandIdentity25, brandIdentity26, brandIdentity27, brandIdentity28,
