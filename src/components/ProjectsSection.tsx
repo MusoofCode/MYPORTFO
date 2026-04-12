@@ -80,7 +80,7 @@ const brandIdentityImages = [
   brandIdentity1, brandIdentity2, brandIdentity3, brandIdentity4,
   brandIdentity5, brandIdentity6, brandIdentity7, brandIdentity8,
   brandIdentity9, brandIdentity10, brandIdentity11, brandIdentity12,
-  brandIdentity13, brandIdentity14, brandIdentity15, brandIdentity16,
+  brandIdentity13, brandIdentity14, brandIdentity15,
   brandIdentity17, brandIdentity18, brandIdentity19, brandIdentity20,
   brandIdentity21, brandIdentity22, brandIdentity23, brandIdentity24,
   brandIdentity25, brandIdentity26, brandIdentity27, brandIdentity28,
