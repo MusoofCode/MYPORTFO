@@ -19,7 +19,7 @@ import brandIdentity12 from '@/assets/brand-identity-12.jpg';
 import brandIdentity13 from '@/assets/brand-identity-13.jpg';
 import brandIdentity14 from '@/assets/brand-identity-14.jpg';
 import brandIdentity15 from '@/assets/brand-identity-15.jpg';
-import brandIdentity16 from '@/assets/brand-identity-16.jpg';
+
 import brandIdentity17 from '@/assets/brand-identity-17.jpg';
 import brandIdentity18 from '@/assets/brand-identity-18.jpg';
 import brandIdentity19 from '@/assets/brand-identity-19.jpg';
