@@ -166,6 +166,22 @@ export const CertificatesSection = () => {
                   onContextMenu={(e) => e.preventDefault()}
                   draggable={false}
                 />
+                {/* Watermark overlay */}
+                <div
+                  aria-hidden
+                  className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden"
+                >
+                  <div className="rotate-[-30deg] flex flex-col gap-6 opacity-[0.18]">
+                    {Array.from({ length: 4 }).map((_, i) => (
+                      <div
+                        key={i}
+                        className="whitespace-nowrap text-foreground font-display font-bold tracking-[0.4em] text-sm sm:text-base"
+                      >
+                        MUSOOF · MUSOOF · MUSOOF · MUSOOF
+                      </div>
+                    ))}
+                  </div>
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
                   <div className="flex items-center gap-2 px-4 py-2 rounded-full glass text-sm font-medium">
                     <Eye className="w-4 h-4 text-primary" />
