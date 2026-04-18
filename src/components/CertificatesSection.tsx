@@ -9,6 +9,7 @@ import dataScienceTranscript from '@/assets/certificates/data-science-transcript
 import digitalMarketing from '@/assets/certificates/digital-marketing-1.jpg';
 import digitalMarketingTranscript from '@/assets/certificates/digital-marketing-transcript-1.jpg';
 import videoEditing from '@/assets/certificates/video-editing-1.jpg';
+import somalilandAi from '@/assets/certificates/somaliland-ai.jpg';
 
 type Certificate = {
   title: string;
@@ -20,6 +21,14 @@ type Certificate = {
 };
 
 const certificates: Certificate[] = [
+  {
+    title: 'Artificial Intelligence Training',
+    issuer: 'Somaliland Innovation Zone × Taiwan ICDF',
+    year: '2025',
+    category: 'Artificial Intelligence',
+    preview: somalilandAi,
+    pdf: '',
+  },
   {
     title: 'Backend Development',
     issuer: 'Professional Training',
