@@ -242,12 +242,29 @@ export const CertificatesSection = () => {
               </div>
 
               <div className="relative flex-1 overflow-auto bg-muted/20 flex items-center justify-center p-4 select-none">
-                <img
-                  src={active.preview}
-                  alt={active.title}
-                  className="max-w-full max-h-[70vh] object-contain rounded-lg shadow-2xl pointer-events-none"
-                  draggable={false}
-                />
+                <div className="relative max-w-full max-h-[70vh]">
+                  <img
+                    src={active.preview}
+                    alt={active.title}
+                    className="max-w-full max-h-[70vh] object-contain rounded-lg shadow-2xl pointer-events-none"
+                    draggable={false}
+                  />
+                  <div
+                    aria-hidden
+                    className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden rounded-lg"
+                  >
+                    <div className="rotate-[-30deg] flex flex-col gap-10 opacity-20">
+                      {Array.from({ length: 6 }).map((_, i) => (
+                        <div
+                          key={i}
+                          className="whitespace-nowrap text-foreground font-display font-bold tracking-[0.5em] text-lg sm:text-2xl"
+                        >
+                          MUSOOF · MUSOOF · MUSOOF · MUSOOF · MUSOOF
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
 
                 <button
                   aria-label="Previous certificate"
