@@ -172,7 +172,7 @@ export const ChatBot = () => {
                 <p className="text-xs text-muted-foreground">Ask anything about Mustafa</p>
               </div>
               <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
                 Online
               </span>
             </div>
