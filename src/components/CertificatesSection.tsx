@@ -10,6 +10,8 @@ import digitalMarketing from '@/assets/certificates/digital-marketing-1.jpg';
 import digitalMarketingTranscript from '@/assets/certificates/digital-marketing-transcript-1.jpg';
 import videoEditing from '@/assets/certificates/video-editing-1.jpg';
 import somalilandAi from '@/assets/certificates/somaliland-ai.jpg';
+import gollisBachelor from '@/assets/certificates/gollis-bachelor.jpg';
+import alAnwarSecondary from '@/assets/certificates/al-anwar-secondary.jpg';
 
 type Certificate = {
   title: string;
@@ -22,11 +24,27 @@ type Certificate = {
 
 const certificates: Certificate[] = [
   {
+    title: 'Bachelor of Science in Software Engineering',
+    issuer: 'Gollis University',
+    year: '2025',
+    category: 'Degree',
+    preview: gollisBachelor,
+    pdf: '',
+  },
+  {
     title: 'Artificial Intelligence Training',
     issuer: 'Somaliland Innovation Zone × Taiwan ICDF',
     year: '2025',
     category: 'Artificial Intelligence',
     preview: somalilandAi,
+    pdf: '',
+  },
+  {
+    title: 'Secondary Certificate of Islamic Studies',
+    issuer: 'Al-Anwar Institute, Hargeisa',
+    year: '2021',
+    category: 'Education',
+    preview: alAnwarSecondary,
     pdf: '',
   },
   {
@@ -148,6 +166,22 @@ export const CertificatesSection = () => {
                   onContextMenu={(e) => e.preventDefault()}
                   draggable={false}
                 />
+                {/* Watermark overlay */}
+                <div
+                  aria-hidden
+                  className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden"
+                >
+                  <div className="rotate-[-30deg] flex flex-col gap-6 opacity-[0.18]">
+                    {Array.from({ length: 4 }).map((_, i) => (
+                      <div
+                        key={i}
+                        className="whitespace-nowrap text-foreground font-display font-bold tracking-[0.4em] text-sm sm:text-base"
+                      >
+                        MUSOOF · MUSOOF · MUSOOF · MUSOOF
+                      </div>
+                    ))}
+                  </div>
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
                   <div className="flex items-center gap-2 px-4 py-2 rounded-full glass text-sm font-medium">
                     <Eye className="w-4 h-4 text-primary" />
@@ -208,12 +242,29 @@ export const CertificatesSection = () => {
               </div>
 
               <div className="relative flex-1 overflow-auto bg-muted/20 flex items-center justify-center p-4 select-none">
-                <img
-                  src={active.preview}
-                  alt={active.title}
-                  className="max-w-full max-h-[70vh] object-contain rounded-lg shadow-2xl pointer-events-none"
-                  draggable={false}
-                />
+                <div className="relative max-w-full max-h-[70vh]">
+                  <img
+                    src={active.preview}
+                    alt={active.title}
+                    className="max-w-full max-h-[70vh] object-contain rounded-lg shadow-2xl pointer-events-none"
+                    draggable={false}
+                  />
+                  <div
+                    aria-hidden
+                    className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden rounded-lg"
+                  >
+                    <div className="rotate-[-30deg] flex flex-col gap-10 opacity-20">
+                      {Array.from({ length: 6 }).map((_, i) => (
+                        <div
+                          key={i}
+                          className="whitespace-nowrap text-foreground font-display font-bold tracking-[0.5em] text-lg sm:text-2xl"
+                        >
+                          MUSOOF · MUSOOF · MUSOOF · MUSOOF · MUSOOF
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
 
                 <button
                   aria-label="Previous certificate"
