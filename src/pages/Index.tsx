@@ -12,6 +12,7 @@ import { ContactSection } from '@/components/ContactSection';
 import { Footer } from '@/components/Footer';
 import { ScrollProgress } from '@/components/ScrollProgress';
 import { SplashScreen } from '@/components/SplashScreen';
+import { ChatBot } from '@/components/ChatBot';
 
 const Index = () => {
   const [showSplash, setShowSplash] = useState(true);
@@ -36,6 +37,7 @@ const Index = () => {
       <LanguagesSection />
       <ContactSection />
       <Footer />
+      <ChatBot />
     </main>
   );
 };
