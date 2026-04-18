@@ -171,13 +171,14 @@ export const CertificatesSection = () => {
                   aria-hidden
                   className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden"
                 >
-                  <div className="rotate-[-30deg] flex flex-col gap-6 opacity-[0.18]">
-                    {Array.from({ length: 4 }).map((_, i) => (
+                  <div className="rotate-[-30deg] flex flex-col gap-5 opacity-[0.14]">
+                    {Array.from({ length: 6 }).map((_, i) => (
                       <div
                         key={i}
-                        className="whitespace-nowrap text-foreground font-display font-bold tracking-[0.4em] text-sm sm:text-base"
+                        className="whitespace-nowrap text-foreground font-display font-semibold tracking-[0.35em] text-[10px] sm:text-xs"
+                        style={{ marginLeft: `${(i % 2) * 40}px` }}
                       >
-                        MUSOOF · MUSOOF · MUSOOF · MUSOOF
+                        Mustafa Ahmed Abdillahi · Mustafa Ahmed Abdillahi · Mustafa Ahmed Abdillahi
                       </div>
                     ))}
                   </div>
@@ -253,13 +254,14 @@ export const CertificatesSection = () => {
                     aria-hidden
                     className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden rounded-lg"
                   >
-                    <div className="rotate-[-30deg] flex flex-col gap-10 opacity-20">
-                      {Array.from({ length: 6 }).map((_, i) => (
+                    <div className="rotate-[-30deg] flex flex-col gap-8 opacity-[0.16]">
+                      {Array.from({ length: 9 }).map((_, i) => (
                         <div
                           key={i}
-                          className="whitespace-nowrap text-foreground font-display font-bold tracking-[0.5em] text-lg sm:text-2xl"
+                          className="whitespace-nowrap text-foreground font-display font-semibold tracking-[0.4em] text-sm sm:text-lg"
+                          style={{ marginLeft: `${(i % 2) * 80}px` }}
                         >
-                          MUSOOF · MUSOOF · MUSOOF · MUSOOF · MUSOOF
+                          Mustafa Ahmed Abdillahi · Mustafa Ahmed Abdillahi · Mustafa Ahmed Abdillahi
                         </div>
                       ))}
                     </div>
