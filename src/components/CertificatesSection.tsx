@@ -10,6 +10,8 @@ import digitalMarketing from '@/assets/certificates/digital-marketing-1.jpg';
 import digitalMarketingTranscript from '@/assets/certificates/digital-marketing-transcript-1.jpg';
 import videoEditing from '@/assets/certificates/video-editing-1.jpg';
 import somalilandAi from '@/assets/certificates/somaliland-ai.jpg';
+import gollisBachelor from '@/assets/certificates/gollis-bachelor.jpg';
+import alAnwarSecondary from '@/assets/certificates/al-anwar-secondary.jpg';
 
 type Certificate = {
   title: string;
@@ -22,11 +24,27 @@ type Certificate = {
 
 const certificates: Certificate[] = [
   {
+    title: 'Bachelor of Science in Software Engineering',
+    issuer: 'Gollis University',
+    year: '2025',
+    category: 'Degree',
+    preview: gollisBachelor,
+    pdf: '',
+  },
+  {
     title: 'Artificial Intelligence Training',
     issuer: 'Somaliland Innovation Zone × Taiwan ICDF',
     year: '2025',
     category: 'Artificial Intelligence',
     preview: somalilandAi,
+    pdf: '',
+  },
+  {
+    title: 'Secondary Certificate of Islamic Studies',
+    issuer: 'Al-Anwar Institute, Hargeisa',
+    year: '2021',
+    category: 'Education',
+    preview: alAnwarSecondary,
     pdf: '',
   },
   {
