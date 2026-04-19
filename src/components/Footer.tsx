@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Heart, Github, Linkedin, Twitter, Mail, Instagram, MessageCircle } from 'lucide-react';
+import logo from '@/assets/musoof-logo.png';
 
 const socialLinks = [
   { icon: Github, href: 'https://github.com/MusoofCode', label: 'GitHub' },
@@ -23,10 +24,11 @@ export const Footer = () => {
           {/* Logo */}
           <motion.a
             href="#"
-            className="text-3xl font-display font-bold gradient-text mb-6"
+            className="flex items-center gap-3 mb-6"
             whileHover={{ scale: 1.05 }}
           >
-            MUSOOF
+            <img src={logo} alt="MUSOOF logo" className="w-12 h-12 rounded-xl shadow-lg" />
+            <span className="text-3xl font-display font-bold gradient-text">MUSOOF</span>
           </motion.a>
 
           {/* Social Links */}
