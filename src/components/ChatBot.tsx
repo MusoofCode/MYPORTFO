@@ -13,6 +13,23 @@ const SUGGESTIONS = [
   'How can I contact him?',
 ];
 
+type Lang = 'EN' | 'SO' | 'AR';
+
+const detectLang = (text: string): Lang => {
+  if (/[\u0600-\u06FF]/.test(text)) return 'AR';
+  const t = ` ${text.toLowerCase()} `;
+  const soWords = [
+    ' waa ', ' waxaan ', ' waxa ', ' waxaa ', ' maxay ', ' maxaa ', ' yaa ', ' kuma ',
+    ' sidee ', ' xaggee ', ' goorma ', ' iyo ', ' oo ', ' ma ', ' aniga ', ' adiga ',
+    ' isaga ', ' iyada ', ' fadlan ', ' mahadsanid ', ' soomaali ', ' soo ', ' shaqo ',
+    ' xirfad ', ' mashruuc ', ' xiriir ', ' magacaa ', ' magaca ',
+  ];
+  if (soWords.some((w) => t.includes(w))) return 'SO';
+  return 'EN';
+};
+
+const LANG_LABEL: Record<Lang, string> = { EN: 'English', SO: 'Soomaali', AR: 'العربية' };
+
 export const ChatBot = () => {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState('');
@@ -24,6 +41,7 @@ export const ChatBot = () => {
     },
   ]);
   const [isLoading, setIsLoading] = useState(false);
+  const [lang, setLang] = useState<Lang>('EN');
   const scrollRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
@@ -38,6 +56,7 @@ export const ChatBot = () => {
     const userMsg: Msg = { role: 'user', content: trimmed };
     const nextMessages = [...messages, userMsg];
     setMessages(nextMessages);
+    setLang(detectLang(trimmed));
     setInput('');
     setIsLoading(true);
 
@@ -171,7 +190,22 @@ export const ChatBot = () => {
                 <h3 className="font-display font-bold text-sm">MUSOOF Assistant</h3>
                 <p className="text-xs text-muted-foreground">Ask anything about Mustafa</p>
               </div>
-              <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
+              <span
+                className="hidden xs:flex items-center gap-1.5 text-[10px] font-semibold px-2 py-1 rounded-full bg-primary/15 text-primary border border-primary/30"
+                title={`Reply language: ${LANG_LABEL[lang]}`}
+              >
+                {(['EN', 'SO', 'AR'] as Lang[]).map((l) => (
+                  <span
+                    key={l}
+                    className={`px-1 rounded transition-colors ${
+                      lang === l ? 'bg-primary text-primary-foreground' : 'opacity-50'
+                    }`}
+                  >
+                    {l}
+                  </span>
+                ))}
+              </span>
+              <span className="hidden sm:flex items-center gap-1.5 text-xs text-muted-foreground">
                 <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
                 Online
               </span>

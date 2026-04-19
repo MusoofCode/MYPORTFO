@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Moon, Sun } from 'lucide-react';
+import logo from '@/assets/musoof-logo.png';
 
 const navLinks = [
   { name: 'About', href: '#about' },
@@ -43,11 +44,12 @@ export const Navbar = () => {
           {/* Logo */}
           <motion.a
             href="#"
-            className="text-2xl font-display font-bold gradient-text"
+            className="flex items-center gap-2"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            MUSOOF
+            <img src={logo} alt="MUSOOF logo" className="w-9 h-9 rounded-lg shadow-md" />
+            <span className="text-2xl font-display font-bold gradient-text">MUSOOF</span>
           </motion.a>
 
           {/* Desktop Navigation */}
