@@ -1,9 +1,41 @@
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
-import { Palette, Users, Clock } from 'lucide-react';
+import { Palette, Users, Clock, Code2, Briefcase } from 'lucide-react';
 import { Tilt3DCard } from './Tilt3DCard';
 
 const experiences = [
+  {
+    title: 'CEO & Founder',
+    company: 'MusoofSofts (IT Solutions Company)',
+    period: '2024 - Present',
+    icon: Briefcase,
+    responsibilities: [
+      'Founded and lead an IT solutions company delivering web, mobile, and branding services',
+      'Oversee product strategy, client relationships, and team operations end-to-end',
+      'Architect scalable software solutions tailored for SMEs and startups',
+      'Drive business growth through digital marketing and innovative tech offerings',
+    ],
+    metrics: [
+      { label: 'Role', value: 'CEO' },
+      { label: 'Focus', value: 'IT Solutions' },
+    ],
+  },
+  {
+    title: 'Software Developer',
+    company: 'Bluekom Fiber',
+    period: '2025 - Present',
+    icon: Code2,
+    responsibilities: [
+      'Develop and maintain internal software systems powering fiber network operations',
+      'Build responsive web applications with React, TypeScript, and modern backend stacks',
+      'Integrate APIs, databases, and authentication flows for secure customer portals',
+      'Collaborate with cross-functional teams to ship features and optimize performance',
+    ],
+    metrics: [
+      { label: 'Stack', value: 'Full-Stack' },
+      { label: 'Industry', value: 'Telecom' },
+    ],
+  },
   {
     title: 'Freelance Graphic & Social Media Designer',
     company: 'Self-Employed',
