@@ -1,6 +1,6 @@
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
-import { Palette, Users, Clock, Code2, Briefcase } from 'lucide-react';
+import { Palette, Users, Clock, Code2, Briefcase, Mail, Download, ArrowRight } from 'lucide-react';
 import { Tilt3DCard } from './Tilt3DCard';
 
 const experiences = [
@@ -112,64 +112,144 @@ export const ExperienceSection = () => {
         </motion.div>
 
         {/* Experience Cards */}
-        <div className="grid lg:grid-cols-2 gap-8">
-          {experiences.map((exp, index) => (
-            <motion.div
-              key={exp.title}
-              initial={{ opacity: 0, x: index % 2 === 0 ? -60 : 60, rotateY: index % 2 === 0 ? -5 : 5 }}
-              animate={isInView ? { opacity: 1, x: 0, rotateY: 0 } : {}}
-              transition={{ duration: 0.7, delay: index * 0.2, type: 'spring', stiffness: 80 }}
-            >
-              <Tilt3DCard className="card-glass h-full group" intensity={5}>
-                {/* Header */}
-                <div className="flex items-start gap-4 mb-6">
+        {/* Timeline Layout */}
+        <div className="relative">
+          {/* Vertical spine line */}
+          <motion.div
+            initial={{ scaleY: 0 }}
+            animate={isInView ? { scaleY: 1 } : {}}
+            transition={{ duration: 1.2, ease: 'easeOut' }}
+            style={{ transformOrigin: 'top' }}
+            className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 md:-translate-x-1/2 bg-gradient-to-b from-primary/60 via-primary/40 to-secondary/40"
+          />
+
+          <div className="space-y-12 md:space-y-16">
+            {experiences.map((exp, index) => {
+              const isLeft = index % 2 === 0;
+              return (
+                <motion.div
+                  key={exp.title}
+                  initial={{ opacity: 0, x: isLeft ? -80 : 80 }}
+                  animate={isInView ? { opacity: 1, x: 0 } : {}}
+                  transition={{ duration: 0.7, delay: index * 0.15, type: 'spring', stiffness: 70 }}
+                  className={`relative flex items-center ${
+                    isLeft ? 'md:flex-row' : 'md:flex-row-reverse'
+                  }`}
+                >
+                  {/* Timeline dot */}
                   <motion.div
-                    className="p-4 rounded-2xl bg-primary/20 group-hover:bg-primary/30 transition-colors"
-                    whileHover={{ rotate: 10, scale: 1.1 }}
+                    initial={{ scale: 0 }}
+                    animate={isInView ? { scale: 1 } : {}}
+                    transition={{ duration: 0.5, delay: index * 0.15 + 0.3, type: 'spring' }}
+                    className="absolute left-4 md:left-1/2 -translate-x-1/2 z-20 flex items-center justify-center"
                   >
-                    <exp.icon className="w-8 h-8 text-primary" />
+                    <span className="absolute w-8 h-8 rounded-full bg-primary/30 animate-ping" />
+                    <span className="relative w-5 h-5 rounded-full bg-primary border-4 border-background shadow-[0_0_20px_hsl(var(--primary))]" />
                   </motion.div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-display font-bold mb-1">{exp.title}</h3>
-                    <p className="text-primary font-medium">{exp.company}</p>
-                    <div className="flex items-center gap-2 mt-2 text-muted-foreground text-sm">
-                      <Clock className="w-4 h-4" />
-                      <span>{exp.period}</span>
-                    </div>
-                  </div>
-                </div>
 
-                {/* Responsibilities */}
-                <ul className="space-y-3 mb-6">
-                  {exp.responsibilities.map((resp, i) => (
-                    <motion.li
-                      key={i}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={isInView ? { opacity: 1, x: 0 } : {}}
-                      transition={{ delay: 0.4 + i * 0.1 }}
-                      className="flex items-start gap-3 text-muted-foreground"
-                    >
-                      <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
-                      <span className="text-sm">{resp}</span>
-                    </motion.li>
-                  ))}
-                </ul>
+                  {/* Spacer for desktop alternating */}
+                  <div className="hidden md:block md:w-1/2" />
 
-                {/* Metrics */}
-                <div className="flex gap-4 pt-4 border-t border-border/50">
-                  {exp.metrics.map((metric) => (
-                    <div key={metric.label} className="flex-1 text-center">
-                      <div className="text-2xl font-display font-bold gradient-text">
-                        {metric.value}
+                  {/* Card */}
+                  <div className={`w-full pl-14 md:pl-0 md:w-1/2 ${isLeft ? 'md:pr-12' : 'md:pl-12'}`}>
+                    <Tilt3DCard className="card-glass group relative" intensity={5}>
+                      {/* Date badge */}
+                      <div className="flex items-center gap-2 mb-4">
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/15 border border-primary/30 text-primary text-xs font-semibold tracking-wide">
+                          <Clock className="w-3 h-3" />
+                          {exp.period}
+                        </span>
                       </div>
-                      <div className="text-xs text-muted-foreground">{metric.label}</div>
-                    </div>
-                  ))}
-                </div>
-              </Tilt3DCard>
-            </motion.div>
-          ))}
+
+                      {/* Header */}
+                      <div className="flex items-start gap-4 mb-5">
+                        <motion.div
+                          className="p-3 rounded-2xl bg-primary/20 group-hover:bg-primary/30 transition-colors flex-shrink-0"
+                          whileHover={{ rotate: 10, scale: 1.1 }}
+                        >
+                          <exp.icon className="w-6 h-6 text-primary" />
+                        </motion.div>
+                        <div className="flex-1 min-w-0">
+                          <h3 className="text-lg md:text-xl font-display font-bold mb-1 leading-tight">
+                            {exp.title}
+                          </h3>
+                          <p className="text-primary font-medium text-sm">{exp.company}</p>
+                        </div>
+                      </div>
+
+                      {/* Responsibilities */}
+                      <ul className="space-y-2.5 mb-5">
+                        {exp.responsibilities.map((resp, i) => (
+                          <li
+                            key={i}
+                            className="flex items-start gap-3 text-muted-foreground"
+                          >
+                            <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
+                            <span className="text-sm">{resp}</span>
+                          </li>
+                        ))}
+                      </ul>
+
+                      {/* Metrics */}
+                      <div className="flex gap-4 pt-4 border-t border-border/50">
+                        {exp.metrics.map((metric) => (
+                          <div key={metric.label} className="flex-1 text-center">
+                            <div className="text-xl font-display font-bold gradient-text">
+                              {metric.value}
+                            </div>
+                            <div className="text-xs text-muted-foreground">{metric.label}</div>
+                          </div>
+                        ))}
+                      </div>
+                    </Tilt3DCard>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
+
+        {/* Call to Action */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, delay: 0.4 }}
+          className="mt-20 md:mt-24"
+        >
+          <div className="card-glass relative overflow-hidden text-center max-w-3xl mx-auto py-10 px-6 md:py-12 md:px-10">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10 pointer-events-none" />
+            <div className="relative z-10">
+              <h3 className="text-2xl md:text-3xl font-display font-bold mb-3">
+                Like what you've seen so far?
+              </h3>
+              <p className="text-muted-foreground mb-7 max-w-xl mx-auto">
+                Let's build something impactful together — reach out or grab my CV to learn more about my work.
+              </p>
+              <div className="flex flex-wrap items-center justify-center gap-4">
+                <motion.a
+                  href="#contact"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-semibold shadow-[0_8px_30px_hsl(var(--primary)/0.35)] hover:shadow-[0_12px_40px_hsl(var(--primary)/0.5)] transition-shadow"
+                >
+                  <Mail className="w-4 h-4" />
+                  Get in Touch
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </motion.a>
+                <motion.a
+                  href="/Mustafa_CV.pdf"
+                  download
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full glass border border-primary/30 text-foreground font-semibold hover:border-primary/60 transition-colors"
+                >
+                  <Download className="w-4 h-4" />
+                  Download CV
+                </motion.a>
+              </div>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
