@@ -146,6 +146,17 @@
   }
   .gradient-link:hover::after { @apply w-full; }
 
+  /* Plain link → gradient text on hover */
+  .link-hover-gradient {
+    @apply transition-all duration-300 relative;
+  }
+  .link-hover-gradient:hover {
+    background-image: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
   /* Section title with consistent gradient highlight */
   .section-title-gradient {
     @apply text-4xl md:text-5xl font-bold mb-4 font-display bg-clip-text text-transparent;
