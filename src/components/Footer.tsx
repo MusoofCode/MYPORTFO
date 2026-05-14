@@ -53,7 +53,7 @@ export const Footer = () => {
               <motion.a
                 key={item}
                 href={`#${item.toLowerCase()}`}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                className="text-sm text-muted-foreground link-hover-gradient"
                 whileHover={{ y: -2 }}
               >
                 {item}
