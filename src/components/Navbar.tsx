@@ -61,7 +61,7 @@ export const Navbar = () => {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
-                className="text-muted-foreground hover:text-foreground transition-colors duration-300 text-sm font-medium"
+                className="text-muted-foreground link-hover-gradient text-sm font-medium"
                 whileHover={{ y: -2 }}
               >
                 {link.name}
